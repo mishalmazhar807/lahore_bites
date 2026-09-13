@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rider Dashboard - Lahore Bites</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #fff7f8;
+      color: #111827;
+    }
+
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 285px;
+      height: 100vh;
+      position: fixed;
+      background: #ef4f5f;
+      color: white;
+      padding: 30px 22px;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 900;
+      font-style: italic;
+      margin-bottom: 35px;
+    }
+
+    .rider-box {
+      background: rgba(255,255,255,0.18);
+      padding: 18px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+    }
+
+    .rider-box h3 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .rider-box p {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .menu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .main {
+      margin-left: 285px;
+      width: calc(100% - 285px);
+      padding: 35px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .topbar h1 {
+      font-size: 36px;
+    }
+
+    .topbar h1 span {
+      color: #ef4f5f;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .home-btn,
+    .status-btn {
+      text-decoration: none;
+      padding: 12px 18px;
+      border-radius: 25px;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+
+    .home-btn {
+      background: #111827;
+      color: white;
+    }
+
+    .status-btn {
+      background: #22c55e;
+      color: white;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      margin-bottom: 35px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 25px;
+      border-radius: 24px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .stat-card .icon {
+      font-size: 34px;
+      margin-bottom: 14px;
+    }
+
+    .stat-card h3 {
+      font-size: 32px;
+      color: #ef4f5f;
+      margin-bottom: 6px;
+    }
+
+    .stat-card p {
+      color: #667085;
+      font-weight: 600;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.9fr;
+      gap: 25px;
+      margin-bottom: 35px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 26px;
+      padding: 26px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .panel h2 {
+      font-size: 26px;
+      margin-bottom: 22px;
+    }
+
+    .delivery-card {
+      border: 1px solid #f1d7dc;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .delivery-card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .delivery-card p {
+      color: #667085;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .status {
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .assigned {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .picked {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .delivered {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .delivery-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .delivery-actions button {
+      border: none;
+      padding: 9px 13px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .pickup-btn {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .deliver-btn {
+      background: #22c55e;
+      color: white;
+    }
+
+    .details-btn {
+      background: #111827;
+      color: white;
+    }
+
+    .rider-profile {
+      text-align: center;
+    }
+
+    .rider-avatar {
+      width: 125px;
+      height: 125px;
+      border-radius: 50%;
+      background: #ffe1e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 58px;
+      margin: 0 auto 16px;
+      border: 5px solid #ffd0d8;
+    }
+
+    .rider-profile h3 {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .rider-profile p {
+      color: #667085;
+      margin-bottom: 8px;
+    }
+
+    .availability {
+      color: #15803d;
+      background: #dcfce7;
+      padding: 8px 14px;
+      border-radius: 20px;
+      display: inline-block;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .profile-info {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .profile-info div {
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f1f1;
+      color: #374151;
+    }
+
+    .section-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .history-table {
+      width: 100%;
+      background: white;
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+      border-collapse: collapse;
+    }
+
+    .history-table th,
+    .history-table td {
+      padding: 18px;
+      text-align: left;
+      border-bottom: 1px solid #f1f1f1;
+      font-size: 15px;
+    }
+
+    .history-table th {
+      background: #ef4f5f;
+      color: white;
+    }
+
+    @media (max-width: 1100px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 22px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .delivery-card {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="dashboard">
+
+    <aside class="sidebar">
+      <div class="logo">Lahore Bites</div>
+
+      <div class="rider-box">
+        <h3 id="sideRiderName">Rider</h3>
+        <p>Delivery Partner Panel</p>
+      </div>
+
+      <div class="menu">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">Assigned Deliveries</a>
+        <a href="#">Delivery History</a>
+        <a href="#">Earnings</a>
+        <a href="#">Profile</a>
+        <a href="index.html">Logout</a>
+      </div>
+    </aside>
+
+    <main class="main">
+
+      <div class="topbar">
+        <h1>Welcome, <span id="riderName">Rider</span></h1>
+
+        <div class="top-actions">
+          <a href="index.html" class="home-btn">← Home</a>
+          <button class="status-btn">Available</button>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="icon">📦</div>
+          <h3>12</h3>
+          <p>Total Deliveries</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon">🚚</div>
+          <h3>3</h3>
+          <p>Assigned Orders</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon">✅</div>
+          <h3>9</h3>
+          <p>Completed</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon">💰</div>
+          <h3>Rs. 7,500</h3>
+          <p>Total Earnings</p>
+        </div>
+      </div>
+
+      <div class="content-grid">
+
+        <section class="panel">
+          <h2>Assigned Deliveries</h2>
+
+          <div class="delivery-card">
+            <div>
+              <h3>#LB1001 - Chicken Biryani</h3>
+              <p><b>Restaurant:</b> Spice Hub, Gulberg</p>
+              <p><b>Customer:</b> Mishal</p>
+              <p><b>Delivery Address:</b> Johar Town, Lahore</p>
+              <p><b>Amount:</b> Rs. 1,200 | Cash on Delivery</p>
+
+              <div class="delivery-actions">
+                <button class="pickup-btn">Mark Picked Up</button>
+                <button class="deliver-btn">Mark Delivered</button>
+                <button class="details-btn">View Details</button>
+              </div>
+            </div>
+
+            <span class="status assigned">Assigned</span>
+          </div>
+
+          <div class="delivery-card">
+            <div>
+              <h3>#LB1002 - Zinger Burger</h3>
+              <p><b>Restaurant:</b> Burger House, Model Town</p>
+              <p><b>Customer:</b> Ali</p>
+              <p><b>Delivery Address:</b> Faisal Town, Lahore</p>
+              <p><b>Amount:</b> Rs. 650 | Online Payment</p>
+
+              <div class="delivery-actions">
+                <button class="deliver-btn">Mark Delivered</button>
+                <button class="details-btn">View Details</button>
+              </div>
+            </div>
+
+            <span class="status picked">Picked Up</span>
+          </div>
+
+          <div class="delivery-card">
+            <div>
+              <h3>#LB1003 - Pizza Deal</h3>
+              <p><b>Restaurant:</b> Pizza Corner, DHA</p>
+              <p><b>Customer:</b> Sara</p>
+              <p><b>Delivery Address:</b> Gulberg III, Lahore</p>
+              <p><b>Amount:</b> Rs. 1,799 | Cash on Delivery</p>
+
+              <div class="delivery-actions">
+                <button class="pickup-btn">Mark Picked Up</button>
+                <button class="details-btn">View Details</button>
+              </div>
+            </div>
+
+            <span class="status assigned">Assigned</span>
+          </div>
+        </section>
+
+        <section class="panel rider-profile">
+          <div class="rider-avatar">🚴</div>
+
+          <h3 id="profileRiderName">Rider Name</h3>
+          <p>Delivery Partner</p>
+
+          <div class="availability">Available for Delivery</div>
+
+          <div class="profile-info">
+            <div><b>Phone:</b> 03XX-XXXXXXX</div>
+            <div><b>Email:</b> rider@lahorebites.com</div>
+            <div><b>Current Area:</b> Lahore</div>
+            <div><b>Vehicle:</b> Bike</div>
+            <div><b>Status:</b> Active</div>
+          </div>
+        </section>
+
+      </div>
+
+      <h2 class="section-title">Delivery History</h2>
+
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Delivery ID</th>
+            <th>Order ID</th>
+            <th>Restaurant</th>
+            <th>Customer</th>
+            <th>Status</th>
+            <th>Earning</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>#D101</td>
+            <td>#LB0998</td>
+            <td>Spice Hub</td>
+            <td>Hina</td>
+            <td><span class="status delivered">Delivered</span></td>
+            <td>Rs. 250</td>
+          </tr>
+
+          <tr>
+            <td>#D102</td>
+            <td>#LB0999</td>
+            <td>Burger House</td>
+            <td>Usman</td>
+            <td><span class="status delivered">Delivered</span></td>
+            <td>Rs. 200</td>
+          </tr>
+
+          <tr>
+            <td>#D103</td>
+            <td>#LB1000</td>
+            <td>Pizza Corner</td>
+            <td>Ayesha</td>
+            <td><span class="status delivered">Delivered</span></td>
+            <td>Rs. 300</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </main>
+  </div>
+
+  <script>
+    const riderName = localStorage.getItem("loggedInUser") || "Rider";
+
+    document.getElementById("riderName").textContent = riderName;
+    document.getElementById("sideRiderName").textContent = riderName;
+    document.getElementById("profileRiderName").textContent = riderName;
+  </script>
+
+</body>
+</html>

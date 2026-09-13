@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Tracking - Lahore Bites</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #fff7f8;
+      color: #111827;
+    }
+
+    header {
+      background: white;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      font-style: italic;
+      color: #ef4f5f;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      background: #ef4f5f;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 14px;
+      font-weight: 700;
+    }
+
+    .container {
+      width: 86%;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .panel h1,
+    .panel h2 {
+      margin-bottom: 25px;
+    }
+
+    .order-id {
+      color: #ef4f5f;
+      font-weight: 900;
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .info-row {
+      padding: 13px 0;
+      border-bottom: 1px solid #f1f1f1;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    .info-row span:last-child {
+      text-align: right;
+      color: #111827;
+    }
+
+    .status-box {
+      background: #fff1f3;
+      border-radius: 22px;
+      padding: 25px;
+      margin-top: 25px;
+    }
+
+    .progress {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 20px;
+      position: relative;
+    }
+
+    .step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+
+    .circle {
+      width: 42px;
+      height: 42px;
+      background: #e5e7eb;
+      color: #6b7280;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .step.active .circle {
+      background: #ef4f5f;
+      color: white;
+    }
+
+    .step.done .circle {
+      background: #22c55e;
+      color: white;
+    }
+
+    .step p {
+      font-size: 13px;
+      font-weight: 700;
+      color: #667085;
+    }
+
+    .step.active p,
+    .step.done p {
+      color: #111827;
+    }
+
+    .items-list {
+      margin-top: 10px;
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f1f1;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f1f1;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .summary-row.total {
+      font-size: 24px;
+      color: #ef4f5f;
+      font-weight: 900;
+      border-bottom: none;
+      margin-top: 10px;
+    }
+
+    .action-btn {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      text-align: center;
+      text-decoration: none;
+      background: #111827;
+      color: white;
+      padding: 15px;
+      border-radius: 16px;
+      font-weight: 800;
+    }
+
+    .simulate-btn {
+      width: 100%;
+      margin-top: 14px;
+      border: none;
+      background: #ef4f5f;
+      color: white;
+      padding: 15px;
+      border-radius: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .empty {
+      width: 86%;
+      margin: 70px auto;
+      text-align: center;
+      background: white;
+      border-radius: 28px;
+      padding: 60px 30px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .empty h1 {
+      margin-bottom: 12px;
+    }
+
+    .empty p {
+      color: #667085;
+      margin-bottom: 25px;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .progress {
+        flex-direction: column;
+      }
+
+      .step {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-align: left;
+      }
+
+      .circle {
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">Lahore Bites</div>
+    <a href="customer-dashboard.html" class="back-btn">← Back to Restaurants</a>
+  </header>
+
+  <div id="pageContent"></div>
+
+  <script>
+    const pageContent = document.getElementById("pageContent");
+    let order = JSON.parse(localStorage.getItem("latestOrder"));
+
+    const statuses = [
+      "Order Placed",
+      "Preparing",
+      "Picked by Rider",
+      "On the Way",
+      "Delivered"
+    ];
+
+    if (!order) {
+      pageContent.innerHTML = `
+        <div class="empty">
+          <h1>No Active Order Found</h1>
+          <p>Please place an order first to track it.</p>
+          <a href="customer-dashboard.html" class="back-btn">Browse Restaurants</a>
+        </div>
+      `;
+    } else {
+      renderOrder();
+    }
+
+    function renderOrder() {
+      const currentIndex = statuses.indexOf(order.status);
+
+      let itemRows = "";
+      order.cart.forEach(item => {
+        const total = item.price * item.qty;
+        itemRows += `
+          <div class="item">
+            <span>${item.name} × ${item.qty}</span>
+            <strong>Rs. ${total}</strong>
+          </div>
+        `;
+      });
+
+      let stepsHtml = "";
+      statuses.forEach((status, index) => {
+        let className = "";
+
+        if (index < currentIndex) {
+          className = "done";
+        } else if (index === currentIndex) {
+          className = "active";
+        }
+
+        stepsHtml += `
+          <div class="step ${className}">
+            <div class="circle">${index + 1}</div>
+            <p>${status}</p>
+          </div>
+        `;
+      });
+
+      pageContent.innerHTML = `
+        <main class="container">
+
+          <section class="panel">
+            <h1>Track Your Order</h1>
+            <div class="order-id">Order ID: #${order.orderId}</div>
+
+            <div class="info-row">
+              <span>Customer Name</span>
+              <span>${order.customerName}</span>
+            </div>
+
+            <div class="info-row">
+              <span>Phone</span>
+              <span>${order.phone}</span>
+            </div>
+
+            <div class="info-row">
+              <span>Delivery Address</span>
+              <span>${order.address}</span>
+            </div>
+
+            <div class="info-row">
+              <span>Payment Method</span>
+              <span>${order.paymentMethod}</span>
+            </div>
+
+            <div class="info-row">
+              <span>Order Time</span>
+              <span>${order.createdAt}</span>
+            </div>
+
+            <div class="info-row">
+              <span>Current Status</span>
+              <span style="color:#ef4f5f;font-weight:900;">${order.status}</span>
+            </div>
+
+            <div class="status-box">
+              <h2>Order Progress</h2>
+              <div class="progress">
+                ${stepsHtml}
+              </div>
+            </div>
+
+            <button class="simulate-btn" onclick="updateStatus()">Update Status</button>
+          </section>
+
+          <aside class="panel">
+            <h2>Order Items</h2>
+
+            <div class="items-list">
+              ${itemRows}
+            </div>
+
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>Rs. ${order.subtotal}</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Delivery Fee</span>
+              <span>Rs. ${order.deliveryFee}</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Tax</span>
+              <span>Rs. ${order.tax}</span>
+            </div>
+
+            <div class="summary-row total">
+              <span>Total</span>
+              <span>Rs. ${order.grandTotal}</span>
+            </div>
+
+            <a href="customer-dashboard.html" class="action-btn">Order More Food</a>
+          </aside>
+
+        </main>
+      `;
+    }
+
+    function updateStatus() {
+      let currentIndex = statuses.indexOf(order.status);
+
+      if (currentIndex < statuses.length - 1) {
+        order.status = statuses[currentIndex + 1];
+        localStorage.setItem("latestOrder", JSON.stringify(order));
+        renderOrder();
+      } else {
+        alert("Order has already been delivered.");
+      }
+    }
+  </script>
+
+</body>
+</html>

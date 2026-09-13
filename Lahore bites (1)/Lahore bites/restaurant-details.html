@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Details - Lahore Bites</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #fff7f8;
+      color: #111827;
+    }
+
+    header {
+      background: white;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      font-style: italic;
+      color: #ef4f5f;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      background: #ef4f5f;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 14px;
+      font-weight: 700;
+    }
+
+    .restaurant-hero {
+      margin: 35px 7%;
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .restaurant-hero img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+    }
+
+    .restaurant-info {
+      padding: 30px;
+    }
+
+    .restaurant-info h1 {
+      font-size: 42px;
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    .restaurant-info p {
+      font-size: 18px;
+      color: #667085;
+      margin-bottom: 8px;
+    }
+
+    .meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      color: #ef4f5f;
+      font-weight: 800;
+    }
+
+    .content {
+      margin: 35px 7%;
+      display: grid;
+      grid-template-columns: 1.5fr 0.8fr;
+      gap: 30px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .panel h2 {
+      font-size: 30px;
+      margin-bottom: 25px;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      border-bottom: 1px solid #f1f1f1;
+      padding: 20px 0;
+    }
+
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .menu-left h3 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .menu-left p {
+      color: #667085;
+      font-size: 15px;
+    }
+
+    .price {
+      color: #ef4f5f;
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .add-btn {
+      border: none;
+      background: #ef4f5f;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .cart-item {
+      border-bottom: 1px solid #f1f1f1;
+      padding: 13px 0;
+      color: #374151;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .cart-total {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 2px solid #f1f1f1;
+      font-size: 22px;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      color: #ef4f5f;
+    }
+
+    .checkout-btn {
+      display: block;
+      width: 100%;
+      margin-top: 22px;
+      background: #111827;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      padding: 14px;
+      border-radius: 14px;
+      font-weight: 800;
+    }
+
+    .review {
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .review h4 {
+      margin-bottom: 6px;
+    }
+
+    .review p {
+      color: #667085;
+      font-size: 15px;
+    }
+
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .restaurant-info h1 {
+        font-size: 32px;
+      }
+
+      .restaurant-hero img {
+        height: 240px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Lahore Bites</div>
+  <a href="customer-dashboard.html" class="back-btn">← Back to Restaurants</a>
+</header>
+
+<section class="restaurant-hero">
+  <img id="restaurantImage" src="assets/images/restaurant1.jpg" alt="Restaurant">
+
+  <div class="restaurant-info">
+    <h1 id="restaurantName">Loading...</h1>
+    <p id="restaurantCuisine">Loading restaurant details...</p>
+    <p id="restaurantItems">Loading address...</p>
+
+    <div class="meta">
+      <span id="restaurantRating">⭐ 0.0</span>
+      <span id="restaurantTime">Open: --</span>
+      <span id="restaurantDistance">Delivery Fee Rs. 0</span>
+    </div>
+  </div>
+</section>
+
+<main class="content">
+
+  <section class="panel">
+    <h2>Menu Items</h2>
+    <div id="menuList">
+      <p style="color:#667085;">Loading menu...</p>
+    </div>
+  </section>
+
+  <aside>
+    <section class="panel">
+      <h2>Your Cart</h2>
+
+      <div id="cartList">
+        <p style="color:#667085;">No items added yet.</p>
+      </div>
+
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">Rs. 0</span>
+      </div>
+
+      <a href="cart.html" class="checkout-btn">Go to Cart</a>
+    </section>
+
+    <section class="panel" style="margin-top:25px;">
+      <h2>Reviews</h2>
+
+      <div class="review">
+        <h4>Customer Review</h4>
+        <p>Reviews will be loaded later from database.</p>
+      </div>
+    </section>
+  </aside>
+
+</main>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const restaurantId = params.get("id");
+
+if (!restaurantId) {
+  alert("Restaurant ID missing");
+  window.location.href = "customer-dashboard.html";
+}
+
+loadRestaurantDetails();
+loadCart();
+
+function loadRestaurantDetails() {
+  fetch(`backend/restaurants/get-restaurant-details.php?id=${restaurantId}`)
+    .then(response => response.text())
+    .then(text => {
+      console.log("Restaurant Details Response:", text);
+      const data = JSON.parse(text);
+
+      if (data.status !== "success") {
+        alert(data.message);
+        window.location.href = "customer-dashboard.html";
+        return;
+      }
+
+      showRestaurantDetails(data.restaurant);
+      showMenuItems(data.menu);
+    })
+    .catch(error => {
+      console.error(error);
+      alert("Failed to load restaurant details. Check API path.");
+    });
+}
+
+function showRestaurantDetails(restaurant) {
+  document.getElementById("restaurantImage").src = restaurant.image || "assets/images/restaurant1.jpg";
+  document.getElementById("restaurantName").textContent = restaurant.restaurant_name || "Restaurant";
+  document.getElementById("restaurantCuisine").textContent = restaurant.description || "Fresh food available.";
+  document.getElementById("restaurantItems").textContent = restaurant.address || "Lahore";
+  document.getElementById("restaurantRating").textContent = "⭐ " + (restaurant.rating || "0.0");
+  document.getElementById("restaurantTime").textContent = "Open: " + (restaurant.opening_time || "--") + " - " + (restaurant.closing_time || "--");
+  document.getElementById("restaurantDistance").textContent = "Delivery Fee Rs. " + (restaurant.delivery_fee || "0");
+}
+
+function showMenuItems(menu) {
+  const menuList = document.getElementById("menuList");
+  menuList.innerHTML = "";
+
+  if (!menu || menu.length === 0) {
+    menuList.innerHTML = "<p style='color:#667085;'>No menu items available for this restaurant.</p>";
+    return;
+  }
+
+  menu.forEach(item => {
+    const itemName = item.item_name || "Food Item";
+    const itemDesc = item.description || "Delicious food item.";
+    const itemPrice = Number(item.price || 0);
+
+    menuList.innerHTML += `
+      <div class="menu-item">
+        <div class="menu-left">
+          <h3>${itemName}</h3>
+          <p>${itemDesc}</p>
+        </div>
+
+        <div>
+          <span class="price">Rs. ${itemPrice}</span>
+          <button class="add-btn" onclick="addToCart(${item.item_id}, '${escapeText(itemName)}', ${itemPrice})">
+            Add
+          </button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function addToCart(itemId, itemName, price) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const existing = cart.find(item => item.item_id == itemId);
+
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({
+      item_id: itemId,
+      item_name: itemName,
+      price: Number(price),
+      quantity: 1,
+      restaurant_id: restaurantId
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert(itemName + " added to cart");
+  loadCart();
+}
+
+function loadCart() {
+  const cartList = document.getElementById("cartList");
+  const cartTotal = document.getElementById("cartTotal");
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart = cart.filter(item => item.restaurant_id == restaurantId);
+
+  cartList.innerHTML = "";
+
+  if (cart.length === 0) {
+    cartList.innerHTML = "<p style='color:#667085;'>No items added yet.</p>";
+    cartTotal.textContent = "Rs. 0";
+    return;
+  }
+
+  let total = 0;
+
+  cart.forEach(item => {
+    const subtotal = Number(item.price) * Number(item.quantity);
+    total += subtotal;
+
+    cartList.innerHTML += `
+      <div class="cart-item">
+        <span>${item.item_name} x ${item.quantity}</span>
+        <strong>Rs. ${subtotal}</strong>
+      </div>
+    `;
+  });
+
+  cartTotal.textContent = "Rs. " + total;
+}
+
+function escapeText(text) {
+  return String(text).replace(/'/g, "\\'");
+}
+</script>
+
+</body>
+</html>

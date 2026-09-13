@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lahore Bites - Customer Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #ffffff;
+      color: #1f2937;
+    }
+
+    .top-header {
+      height: 78px;
+      display: grid;
+      grid-template-columns: 260px 1fr 420px;
+      align-items: center;
+      padding: 0 6%;
+      border-bottom: 1px solid #eeeeee;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      font-style: italic;
+      color: #ef4f5f;
+    }
+
+    .address {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2f3542;
+      text-align: center;
+    }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 22px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .home-btn {
+      text-decoration: none;
+      background: #ef4f5f;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 15px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .nav-search {
+      height: 100px;
+      display: grid;
+      grid-template-columns: 1fr 520px;
+      align-items: center;
+      padding: 0 6%;
+      background: white;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 78px;
+      z-index: 90;
+    }
+
+    .tabs {
+      display: flex;
+      align-items: center;
+      gap: 54px;
+    }
+
+    .tab {
+      font-size: 18px;
+      color: #5b6470;
+      font-weight: 600;
+      padding: 34px 0;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      color: #1f2937;
+    }
+
+    .tab.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 18px;
+      width: 100%;
+      height: 5px;
+      border-radius: 20px;
+      background: #1f2937;
+    }
+
+    .search-box {
+      background: #f4f4f5;
+      height: 58px;
+      border-radius: 35px;
+      display: flex;
+      align-items: center;
+      padding: 0 22px;
+      gap: 14px;
+    }
+
+    .search-box span {
+      font-size: 25px;
+      color: #6b7280;
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-size: 17px;
+      color: #374151;
+    }
+
+    .hero-banner {
+      min-height: 300px;
+      background: #ef1972;
+      display: grid;
+      grid-template-columns: 300px 1fr 430px;
+      align-items: center;
+      padding: 45px 6%;
+      overflow: hidden;
+    }
+
+    .filter-card {
+      background: white;
+      border-radius: 18px;
+      padding: 28px 30px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+      align-self: start;
+      min-height: 340px;
+      z-index: 5;
+    }
+
+    .filter-card h3 {
+      font-size: 26px;
+      margin-bottom: 28px;
+    }
+
+    .filter-card h4 {
+      font-size: 18px;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .radio-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 15px;
+      font-size: 17px;
+      color: #2f3542;
+      cursor: pointer;
+    }
+
+    .radio {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #767d86;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .radio.active {
+      border: 8px solid #2f3542;
+    }
+
+    .quick {
+      margin-top: 30px;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 10px 18px;
+      border: 1px solid #d1d5db;
+      border-radius: 30px;
+      margin: 5px 6px 6px 0;
+      font-size: 15px;
+      background: white;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .banner-content {
+      padding-left: 55px;
+      color: white;
+      z-index: 4;
+    }
+
+    .banner-content h1 {
+      font-size: 46px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .banner-content p {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 32px;
+    }
+
+    .banner-chips {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .banner-chip {
+      background: #ffe0e9;
+      color: #2f3542;
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .cover-dish {
+      width: 270px;
+      height: 190px;
+      background: radial-gradient(circle, #ff9ac5 0%, #ef1972 60%);
+      border-radius: 50%;
+      justify-self: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+
+    .cover-dish img {
+      width: 250px;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 20px rgba(0,0,0,0.25));
+    }
+
+    .main-content {
+      display: block;
+      padding: 45px 6%;
+    }
+
+    .section-title {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 28px;
+      color: #202938;
+    }
+
+    .cuisine-row {
+      display: flex;
+      gap: 28px;
+      overflow-x: auto;
+      padding-bottom: 20px;
+      margin-bottom: 60px;
+    }
+
+    .cuisine-card {
+      min-width: 140px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .cuisine-card img {
+      width: 140px;
+      height: 115px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #f3f4f6;
+    }
+
+    .cuisine-card h4 {
+      margin-top: 12px;
+      color: #ef1972;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .deals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+
+    .deal-card {
+      min-height: 170px;
+      border-radius: 14px;
+      padding: 24px;
+      background: linear-gradient(135deg, #6d28d9, #9d4edd);
+      color: white;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .deal-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .deal-card.pink {
+      background: linear-gradient(135deg, #ff6b9f, #ef1972);
+    }
+
+    .deal-card.orange {
+      background: linear-gradient(135deg, #ff7a00, #ffb703);
+    }
+
+    .deal-card h3 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .deal-card p {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .restaurants-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .restaurant-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.09);
+      border: 1px solid #f1f1f1;
+    }
+
+    .restaurant-card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+    }
+
+    .restaurant-info {
+      padding: 20px;
+    }
+
+    .restaurant-info h3 {
+      font-size: 22px;
+      margin-bottom: 7px;
+    }
+
+    .restaurant-info p {
+      color: #667085;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .restaurant-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      color: #ef1972;
+      margin-top: 12px;
+    }
+
+    .fav-btn {
+      border: none;
+      background: white;
+      color: #ef1972;
+      font-size: 22px;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+
+    .cart-btn {
+      border: none;
+      background: #ef4f5f;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .empty-message {
+      grid-column: 1 / -1;
+      background: #fff1f3;
+      color: #ef4f5f;
+      padding: 25px;
+      border-radius: 18px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    @media (max-width: 1100px) {
+      .top-header,
+      .nav-search,
+      .hero-banner {
+        grid-template-columns: 1fr;
+      }
+
+      .address,
+      .header-actions {
+        display: none;
+      }
+
+      .nav-search {
+        height: auto;
+        gap: 20px;
+        padding: 20px 6%;
+      }
+
+      .tabs {
+        flex-wrap: wrap;
+        gap: 22px;
+      }
+
+      .filter-card {
+        display: none;
+      }
+
+      .banner-content {
+        padding-left: 0;
+      }
+
+      .cover-dish {
+        margin-top: 25px;
+      }
+
+      .deals-grid,
+      .restaurants-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="top-header">
+  <div class="logo">Lahore Bites</div>
+  <div class="address">📍 New address &nbsp; Select your address</div>
+
+  <div class="header-actions">
+    <a href="index.html" class="home-btn">Home</a>
+    <span>👤 <span id="userName">User</span>⌄</span>
+    <span>🌐 EN⌄</span>
+    <span id="favoriteIcon" style="cursor:pointer;">♡</span>
+    <span id="cartIcon" style="cursor:pointer;">🛒</span>
+  </div>
+</header>
+
+<section class="nav-search">
+  <div class="tabs">
+    <div class="tab active">🛵 Delivery</div>
+    <div class="tab">🚶 Pick-up</div>
+  </div>
+
+  <div class="search-box">
+    <span>⌕</span>
+    <input type="text" id="searchInput" placeholder="Search for restaurants, cuisines, and dishes">
+  </div>
+</section>
+
+<section class="hero-banner">
+  <aside class="filter-card">
+    <h3>Filters</h3>
+
+    <h4>Sort by</h4>
+
+    <div class="radio-row" data-sort="relevance">
+      <span class="radio active"></span>
+      <span>Relevance</span>
+    </div>
+
+    <div class="radio-row" data-sort="fastest">
+      <span class="radio"></span>
+      <span>Fastest delivery</span>
+    </div>
+
+    <div class="radio-row" data-sort="fee">
+      <span class="radio"></span>
+      <span>Lowest delivery fee</span>
+    </div>
+
+    <div class="radio-row" data-sort="top">
+      <span class="radio"></span>
+      <span>Top rated</span>
+    </div>
+
+    <div class="quick">
+      <h4>Quick filters</h4>
+      <span class="chip" id="ratingFilter">Ratings 4+</span>
+      <span class="chip" id="resetFilter">Reset</span>
+    </div>
+  </aside>
+
+  <div class="banner-content">
+    <h1>Good Afternoon <span id="bannerUserName">User</span></h1>
+    <p>Ready for something you’ll love?</p>
+
+    <div class="banner-chips">
+      <span class="banner-chip" data-cuisine="all">⟳</span>
+      <span class="banner-chip" data-cuisine="Desserts">✨ Desserts</span>
+      <span class="banner-chip" data-cuisine="Chinese">✨ Chinese</span>
+      <span class="banner-chip" data-cuisine="Ice Cream">✨ Ice Cream</span>
+      <span class="banner-chip" data-cuisine="Shawarma">✨ Shawarma</span>
+      <span class="banner-chip" data-cuisine="Pakistani">✨ Pakistani</span>
+    </div>
+  </div>
+
+  <div class="cover-dish">
+    <img src="assets/images/cover-dish.png" alt="Dish">
+  </div>
+</section>
+
+<main class="main-content">
+  <section>
+    <h2 class="section-title">Cuisines</h2>
+
+    <div class="cuisine-row" id="cuisineRow">
+      <p style="color:#667085;">Loading cuisines...</p>
+    </div>
+
+    <h2 class="section-title">Your daily deals</h2>
+
+    <div class="deals-grid" id="dealsGrid">
+      <div class="empty-message">Loading deals...</div>
+    </div>
+
+    <h2 class="section-title" id="restaurantsTitle">Popular restaurants</h2>
+
+    <div class="restaurants-grid" id="restaurantsGrid"></div>
+  </section>
+</main>
+
+<script>
+  const userName = localStorage.getItem("loggedInUser") || "User";
+  document.getElementById("userName").textContent = userName;
+  document.getElementById("bannerUserName").textContent = userName;
+
+  let restaurants = [];
+  let selectedCuisine = "all";
+  let selectedSort = "relevance";
+  let searchText = "";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    loadCategories();
+    loadRestaurants();
+    loadDeals();
+  });
+
+  function loadCategories() {
+    fetch("backend/categories/get-categories.php")
+      .then(response => response.text())
+      .then(text => {
+        console.log("Categories API Response:", text);
+        const data = JSON.parse(text);
+
+        const cuisineRow = document.getElementById("cuisineRow");
+        cuisineRow.innerHTML = "";
+
+        if (data.status !== "success" || !data.categories || data.categories.length === 0) {
+          cuisineRow.innerHTML = "<p style='color:#667085;'>No cuisines available.</p>";
+          return;
+        }
+
+        data.categories.forEach(category => {
+          cuisineRow.innerHTML += `
+            <div class="cuisine-card" data-cuisine="${category.category_name}">
+              <img src="${category.image || 'assets/images/food-default.jpg'}" alt="${category.category_name}">
+              <h4>${category.category_name}</h4>
+            </div>
+          `;
+        });
+
+        attachCuisineEvents();
+      })
+      .catch(error => {
+        console.error(error);
+        document.getElementById("cuisineRow").innerHTML =
+          "<p style='color:#ef4f5f;'>Cuisine loading failed.</p>";
+      });
+  }
+
+  function attachCuisineEvents() {
+    document.querySelectorAll(".cuisine-card").forEach(card => {
+      card.addEventListener("click", () => {
+        selectedCuisine = card.getAttribute("data-cuisine");
+        searchText = "";
+        document.getElementById("searchInput").value = "";
+        document.getElementById("restaurantsTitle").textContent = selectedCuisine + " Restaurants";
+
+        applyFilters();
+
+        document.getElementById("restaurantsGrid").scrollIntoView({
+          behavior: "smooth"
+        });
+      });
+    });
+  }
+
+  function loadRestaurants() {
+    fetch("backend/restaurants/get-restaurants.php")
+      .then(response => response.text())
+      .then(text => {
+        console.log("Restaurant API Response:", text);
+        const data = JSON.parse(text);
+
+        if (data.status === "success") {
+          restaurants = data.restaurants;
+          applyFilters();
+        } else {
+          showEmpty(data.message || "Unable to load restaurants.");
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        showEmpty("Restaurant loading failed. Check backend/restaurants/get-restaurants.php");
+      });
+  }
+
+  function loadDeals() {
+    fetch("backend/deals/get-deals.php")
+      .then(response => response.text())
+      .then(text => {
+        console.log("Deals API Response:", text);
+        const data = JSON.parse(text);
+
+        const dealsGrid = document.getElementById("dealsGrid");
+        dealsGrid.innerHTML = "";
+
+        if (data.status !== "success" || !data.deals || data.deals.length === 0) {
+          dealsGrid.innerHTML = `<div class="empty-message">No active deals available.</div>`;
+          return;
+        }
+
+        data.deals.forEach((deal, index) => {
+          let colorClass = "";
+          if (index % 3 === 1) colorClass = "pink";
+          if (index % 3 === 2) colorClass = "orange";
+
+          dealsGrid.innerHTML += `
+            <div class="deal-card ${colorClass}" onclick="openDealRestaurant(${deal.restaurant_id}, '${escapeText(deal.restaurant_name)}')">
+              <h3>${deal.discount_percent}% off</h3>
+              <p><strong>${deal.deal_title}</strong></p>
+              <p>${deal.deal_description || ""}</p>
+            </div>
+          `;
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        document.getElementById("dealsGrid").innerHTML =
+          `<div class="empty-message">Deals loading failed.</div>`;
+      });
+  }
+
+  function combinedRestaurantText(r) {
+    return `
+      ${r.restaurant_name || ""}
+      ${r.description || ""}
+      ${r.address || ""}
+      ${r.categories || ""}
+      ${r.menu_items || ""}
+      ${r.category_name || ""}
+      ${r.item_name || ""}
+    `.toLowerCase();
+  }
+
+  function restaurantMatchesCuisine(r, cuisine) {
+    return combinedRestaurantText(r).includes(cuisine.toLowerCase());
+  }
+
+  function restaurantMatchesSearch(r, value) {
+    return combinedRestaurantText(r).includes(value.toLowerCase());
+  }
+
+  function applyFilters() {
+    let data = [...restaurants];
+
+    if (selectedCuisine !== "all") {
+      data = data.filter(r => restaurantMatchesCuisine(r, selectedCuisine));
+    }
+
+    if (searchText !== "") {
+      data = data.filter(r => restaurantMatchesSearch(r, searchText));
+    }
+
+    if (selectedSort === "fee") {
+      data.sort((a, b) => Number(a.delivery_fee || 0) - Number(b.delivery_fee || 0));
+    } else if (selectedSort === "top") {
+      data.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
+    } else if (selectedSort === "fastest") {
+      data.sort((a, b) => Number(a.minimum_order || 0) - Number(b.minimum_order || 0));
+    }
+
+    showRestaurants(data);
+  }
+
+  function showRestaurants(data) {
+    const container = document.getElementById("restaurantsGrid");
+    container.innerHTML = "";
+
+    if (!data || data.length === 0) {
+      showEmpty("No restaurant found.");
+      return;
+    }
+
+    data.forEach(r => {
+      const restaurantId = r.restaurant_id;
+      const name = r.restaurant_name || "Restaurant";
+      const description = r.description || "Fresh food available for delivery.";
+      const address = r.address || "Lahore";
+      const rating = r.rating || "4.0";
+      const deliveryFee = r.delivery_fee || "0";
+      const minimumOrder = r.minimum_order || "0";
+      const image = r.image || "assets/images/restaurant1.jpg";
+      const categories = r.categories ? `<p><strong>Categories:</strong> ${r.categories}</p>` : "";
+      const menuItems = r.menu_items ? `<p><strong>Items:</strong> ${r.menu_items}</p>` : "";
+
+      container.innerHTML += `
+        <div class="restaurant-card">
+          <img src="${image}" alt="${name}">
+          <div class="restaurant-info">
+            <h3>${name}</h3>
+            <p>${description}</p>
+            <p>${address}</p>
+            <p>Minimum order Rs. ${minimumOrder}</p>
+            ${categories}
+            ${menuItems}
+
+            <div class="restaurant-meta">
+              <span>⭐ ${rating}</span>
+              <span>
+                <button class="fav-btn" onclick="addFavorite(${restaurantId}, '${escapeText(name)}')">♡</button>
+                <a href="restaurant-details.html?id=${restaurantId}" class="cart-btn">View Menu</a>
+              </span>
+            </div>
+
+            <p style="margin-top:10px;color:#ef4f5f;font-weight:700;">
+              Delivery Fee: Rs. ${deliveryFee}
+            </p>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function showEmpty(message) {
+    const container = document.getElementById("restaurantsGrid");
+    container.innerHTML = `<div class="empty-message">${message}</div>`;
+  }
+
+  function escapeText(text) {
+    return String(text).replace(/'/g, "\\'");
+  }
+
+  function openDealRestaurant(restaurantId, restaurantName) {
+    const filtered = restaurants.filter(r => Number(r.restaurant_id) === Number(restaurantId));
+
+    document.getElementById("restaurantsTitle").textContent = restaurantName + " Deal";
+    showRestaurants(filtered);
+
+    document.getElementById("restaurantsGrid").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+
+  document.getElementById("searchInput").addEventListener("input", function () {
+    searchText = this.value.trim();
+    document.getElementById("restaurantsTitle").textContent =
+      searchText ? "Search Results" : "Popular restaurants";
+    applyFilters();
+  });
+
+  document.querySelectorAll(".radio-row").forEach(row => {
+    row.addEventListener("click", () => {
+      document.querySelectorAll(".radio").forEach(r => r.classList.remove("active"));
+      row.querySelector(".radio").classList.add("active");
+
+      selectedSort = row.getAttribute("data-sort");
+      applyFilters();
+    });
+  });
+
+  document.querySelectorAll(".banner-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      selectedCuisine = chip.getAttribute("data-cuisine");
+      searchText = "";
+      document.getElementById("searchInput").value = "";
+
+      document.getElementById("restaurantsTitle").textContent =
+        selectedCuisine === "all" ? "Popular restaurants" : selectedCuisine + " Restaurants";
+
+      applyFilters();
+
+      document.getElementById("restaurantsGrid").scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+  });
+
+  document.getElementById("ratingFilter").addEventListener("click", () => {
+    const filtered = restaurants.filter(r => Number(r.rating || 0) >= 4);
+    document.getElementById("restaurantsTitle").textContent = "Top Rated Restaurants";
+    showRestaurants(filtered);
+  });
+
+  document.getElementById("resetFilter").addEventListener("click", () => {
+    selectedCuisine = "all";
+    selectedSort = "relevance";
+    searchText = "";
+    document.getElementById("searchInput").value = "";
+    document.getElementById("restaurantsTitle").textContent = "Popular restaurants";
+    applyFilters();
+  });
+
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      alert(tab.textContent.trim() + " selected");
+    });
+  });
+
+  function addFavorite(restaurantId, name) {
+    const userId = localStorage.getItem("loggedInUserId");
+
+    if (!userId) {
+      alert("Please login first.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    const exists = favorites.some(f => f.restaurant_id == restaurantId);
+
+    if (!exists) {
+      favorites.push({
+        restaurant_id: restaurantId,
+        restaurant_name: name
+      });
+
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      alert(name + " added to favorites");
+    } else {
+      alert(name + " is already in favorites");
+    }
+  }
+
+  document.getElementById("favoriteIcon").addEventListener("click", () => {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    alert("Favorite restaurants: " + (favorites.length ? favorites.map(f => f.restaurant_name).join(", ") : "No favorites yet."));
+  });
+
+  document.getElementById("cartIcon").addEventListener("click", () => {
+    window.location.href = "cart.html";
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Lahore Bites</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+   body {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.62)),
+    url("assets/images/auth-bg.jpg") center center / cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+    .auth-box {
+      width: 430px;
+      background: rgba(255,255,255,0.96);
+      border-radius: 28px;
+      padding: 42px 36px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 900;
+      font-style: italic;
+      color: #ef4f5f;
+      margin-bottom: 10px;
+    }
+
+    .auth-box h2 {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .auth-box p {
+      text-align: center;
+      color: #667085;
+      margin-bottom: 30px;
+      font-size: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .form-group input:focus {
+      border-color: #ef4f5f;
+      box-shadow: 0 0 0 3px rgba(239,79,95,0.12);
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      padding: 15px;
+      border-radius: 16px;
+      background: #ef4f5f;
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #dc3f50;
+    }
+
+    .bottom-text {
+      text-align: center;
+      margin-top: 22px;
+      color: #667085;
+      font-size: 15px;
+    }
+
+    .bottom-text a {
+      color: #ef4f5f;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .home-link {
+      display: block;
+      text-align: center;
+      margin-top: 18px;
+      color: #111827;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="auth-box">
+    <div class="logo">Lahore Bites</div>
+
+    <h2>Login</h2>
+    <p>Login to order food, track deliveries and manage your account.</p>
+
+   <form onsubmit="loginUser(event)">
+  <div class="form-group">
+    <label>Email Address</label>
+  <input type="email" id="email" placeholder="Enter your email" required>
+  </div>
+
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter your password" required>
+  </div>
+
+  <button type="submit" class="btn">Login</button>
+</form>
+
+  <script>
+function loginUser(event) {
+  event.preventDefault();
+
+  const formData = new FormData();
+  formData.append("email", document.getElementById("email").value.trim());
+  formData.append("password", document.getElementById("password").value.trim());
+
+  fetch("backend/auth/login.php", {
+    method: "POST",
+    body: formData
+  })
+  .then(response => response.text())
+  .then(text => {
+    console.log(text);
+    const data = JSON.parse(text);
+
+    alert(data.message);
+
+    if (data.status === "success") {
+      localStorage.setItem("loggedInUserId", data.user.user_id);
+      localStorage.setItem("loggedInUser", data.user.full_name);
+      localStorage.setItem("loggedInEmail", data.user.email);
+      localStorage.setItem("loggedInRole", data.user.role);
+
+      if (data.user.role === "admin") {
+        window.location.href = "admin-dashboard.html";
+      } else if (data.user.role === "restaurant_owner") {
+        window.location.href = "restaurant-dashboard.html";
+      } else if (data.user.role === "rider") {
+        window.location.href = "rider-dashboard.html";
+      } else {
+        window.location.href = "customer-dashboard.html";
+      }
+    }
+  })
+  .catch(error => {
+    console.error(error);
+    alert("Login failed. Press F12 and check Console.");
+  });
+}
+</script>
+
+    <div class="bottom-text">
+      Don’t have an account? <a href="register.html">Register</a>
+    </div>
+
+    <a class="home-link" href="index.html">← Back to Home</a>
+  </div>
+ 
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart - Lahore Bites</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #fff7f8;
+      color: #111827;
+    }
+
+    header {
+      background: white;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      font-style: italic;
+      color: #ef4f5f;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      background: #ef4f5f;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 14px;
+      font-weight: 700;
+    }
+
+    .container {
+      width: 86%;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: 1.4fr 0.7fr;
+      gap: 30px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .panel h1,
+    .panel h2 {
+      margin-bottom: 25px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      gap: 18px;
+      align-items: center;
+      padding: 18px 0;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .cart-item h3 {
+      font-size: 21px;
+      margin-bottom: 5px;
+    }
+
+    .cart-item p {
+      color: #667085;
+      font-size: 14px;
+    }
+
+    .qty-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qty-box button {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 10px;
+      background: #ef4f5f;
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .qty-box span {
+      font-weight: 800;
+      min-width: 22px;
+      text-align: center;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ef4f5f;
+    }
+
+    .remove-btn {
+      border: none;
+      background: #111827;
+      color: white;
+      padding: 9px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f1f1;
+      color: #374151;
+      font-weight: 600;
+    }
+
+    .summary-row.total {
+      font-size: 24px;
+      color: #ef4f5f;
+      font-weight: 900;
+      border-bottom: none;
+      margin-top: 10px;
+    }
+
+    .checkout-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-top: 25px;
+      text-decoration: none;
+      background: #ef4f5f;
+      color: white;
+      padding: 15px;
+      border-radius: 16px;
+      font-weight: 800;
+    }
+
+    .clear-btn {
+      width: 100%;
+      margin-top: 14px;
+      border: none;
+      background: #111827;
+      color: white;
+      padding: 15px;
+      border-radius: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: #667085;
+    }
+
+    .empty h2 {
+      color: #111827;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-item {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">Lahore Bites</div>
+    <a href="customer-dashboard.html" class="back-btn">← Back to Restaurants</a>
+  </header>
+
+  <main class="container">
+
+    <section class="panel">
+      <h1>Your Cart</h1>
+      <div id="cartItems"></div>
+    </section>
+
+    <aside class="panel">
+      <h2>Order Summary</h2>
+
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotal">Rs. 0</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Delivery Fee</span>
+        <span id="deliveryFee">Rs. 150</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Tax</span>
+        <span id="tax">Rs. 0</span>
+      </div>
+
+      <div class="summary-row total">
+        <span>Total</span>
+        <span id="grandTotal">Rs. 0</span>
+      </div>
+
+      <a href="checkout.html" class="checkout-btn">Proceed to Checkout</a>
+      <button class="clear-btn" onclick="clearCart()">Clear Cart</button>
+    </aside>
+
+  </main>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const cartItems = document.getElementById("cartItems");
+    const subtotalEl = document.getElementById("subtotal");
+    const taxEl = document.getElementById("tax");
+    const grandTotalEl = document.getElementById("grandTotal");
+
+    function normalizeCart() {
+      cart = cart.map(item => {
+        if (typeof item === "string") {
+          return {
+            name: item,
+            price: 500,
+            qty: 1
+          };
+        }
+
+        return {
+          name: item.name,
+          price: item.price || 500,
+          qty: item.qty || 1
+        };
+      });
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    function renderCart() {
+      normalizeCart();
+
+      cartItems.innerHTML = "";
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = `
+          <div class="empty">
+            <h2>Your cart is empty</h2>
+            <p>Add food items from restaurants to place an order.</p>
+          </div>
+        `;
+
+        subtotalEl.textContent = "Rs. 0";
+        taxEl.textContent = "Rs. 0";
+        grandTotalEl.textContent = "Rs. 0";
+        return;
+      }
+
+      let subtotal = 0;
+
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.qty;
+        subtotal += itemTotal;
+
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <div>
+              <h3>${item.name}</h3>
+              <p>Food item from Lahore Bites restaurant</p>
+            </div>
+
+            <div class="qty-box">
+              <button onclick="decreaseQty(${index})">-</button>
+              <span>${item.qty}</span>
+              <button onclick="increaseQty(${index})">+</button>
+            </div>
+
+            <div class="price">Rs. ${itemTotal}</div>
+
+            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+          </div>
+        `;
+      });
+
+      const deliveryFee = 150;
+      const tax = Math.round(subtotal * 0.05);
+      const grandTotal = subtotal + deliveryFee + tax;
+
+      subtotalEl.textContent = "Rs. " + subtotal;
+      taxEl.textContent = "Rs. " + tax;
+      grandTotalEl.textContent = "Rs. " + grandTotal;
+
+      localStorage.setItem("orderSubtotal", subtotal);
+      localStorage.setItem("orderTax", tax);
+      localStorage.setItem("orderDeliveryFee", deliveryFee);
+      localStorage.setItem("orderGrandTotal", grandTotal);
+    }
+
+    function increaseQty(index) {
+      cart[index].qty += 1;
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function decreaseQty(index) {
+      if (cart[index].qty > 1) {
+        cart[index].qty -= 1;
+      } else {
+        cart.splice(index, 1);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      localStorage.removeItem("cart");
+      renderCart();
+    }
+
+    renderCart();
+  </script>
+
+</body>
+</html>

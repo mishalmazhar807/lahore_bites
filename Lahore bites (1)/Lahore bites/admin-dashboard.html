@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - Lahore Bites</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #fff7f8;
+      color: #111827;
+    }
+
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 285px;
+      height: 100vh;
+      position: fixed;
+      background: #111827;
+      color: white;
+      padding: 30px 22px;
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 900;
+      font-style: italic;
+      color: #ef4f5f;
+      margin-bottom: 35px;
+    }
+
+    .admin-box {
+      background: rgba(255,255,255,0.10);
+      padding: 18px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+    }
+
+    .admin-box h3 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .admin-box p {
+      font-size: 14px;
+      color: #d1d5db;
+    }
+
+    .menu a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      background: #ef4f5f;
+    }
+
+    .main {
+      margin-left: 285px;
+      width: calc(100% - 285px);
+      padding: 35px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 35px;
+    }
+
+    .topbar h1 {
+      font-size: 36px;
+    }
+
+    .topbar h1 span {
+      color: #ef4f5f;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .home-btn,
+    .add-btn {
+      text-decoration: none;
+      padding: 12px 18px;
+      border-radius: 25px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .home-btn {
+      background: #111827;
+      color: white;
+    }
+
+    .add-btn {
+      background: #ef4f5f;
+      color: white;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      margin-bottom: 35px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 25px;
+      border-radius: 24px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .stat-card .icon {
+      font-size: 34px;
+      margin-bottom: 14px;
+    }
+
+    .stat-card h3 {
+      font-size: 32px;
+      color: #ef4f5f;
+      margin-bottom: 6px;
+    }
+
+    .stat-card p {
+      color: #667085;
+      font-weight: 600;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 25px;
+      margin-bottom: 35px;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 26px;
+      padding: 26px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+    }
+
+    .panel h2 {
+      font-size: 26px;
+      margin-bottom: 22px;
+    }
+
+    .request-card {
+      border: 1px solid #f1d7dc;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .request-card h3 {
+      font-size: 19px;
+      margin-bottom: 6px;
+    }
+
+    .request-card p {
+      color: #667085;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .request-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .request-actions button {
+      border: none;
+      padding: 9px 13px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .approve-btn {
+      background: #22c55e;
+      color: white;
+    }
+
+    .reject-btn {
+      background: #ef4444;
+      color: white;
+    }
+
+    .view-btn {
+      background: #111827;
+      color: white;
+    }
+
+    .status {
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .pending {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .approved {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .blocked {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .quick-list {
+      list-style: none;
+    }
+
+    .quick-list li {
+      padding: 16px 0;
+      border-bottom: 1px solid #f1f1f1;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      color: #374151;
+    }
+
+    .quick-list li:last-child {
+      border-bottom: none;
+    }
+
+    .quick-list strong {
+      color: #111827;
+    }
+
+    .section-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .table-box {
+      background: white;
+      border-radius: 25px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+      margin-bottom: 35px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 18px;
+      text-align: left;
+      border-bottom: 1px solid #f1f1f1;
+      font-size: 15px;
+    }
+
+    th {
+      background: #ef4f5f;
+      color: white;
+    }
+
+    .action-small {
+      border: none;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-right: 5px;
+      font-size: 12px;
+    }
+
+    .edit {
+      background: #111827;
+      color: white;
+    }
+
+    .delete {
+      background: #ef4f5f;
+      color: white;
+    }
+
+    .two-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    @media (max-width: 1100px) {
+      .stats-grid,
+      .content-grid,
+      .two-panels {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 22px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+      }
+
+      .stats-grid,
+      .content-grid,
+      .two-panels {
+        grid-template-columns: 1fr;
+      }
+
+      .request-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .table-box {
+        overflow-x: auto;
+      }
+      .chart-panel {
+  background: white;
+  border-radius: 26px;
+  padding: 26px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+  margin-bottom: 35px;
+}
+
+.chart-box {
+  height: 360px;
+}
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <div class="dashboard">
+
+    <aside class="sidebar">
+      <div class="logo">Lahore Bites</div>
+
+      <div class="admin-box">
+        <h3>Admin Panel</h3>
+        <p>System Management Dashboard</p>
+      </div>
+
+      <div class="menu">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">Users</a>
+        <a href="#">Restaurants</a>
+        <a href="#">Orders</a>
+        <a href="#">Riders</a>
+        <a href="#">Payments</a>
+        <a href="#">Complaints</a>
+        <a href="index.html">Logout</a>
+      </div>
+    </aside>
+
+    <main class="main">
+
+      <div class="topbar">
+        <h1>Welcome, <span>Admin</span></h1>
+
+        <div class="top-actions">
+          <a href="index.html" class="home-btn">← Home</a>
+          <a href="#" class="add-btn">+ Add Restaurant</a>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+            
+          <div class="icon">👤</div>
+          <h3>1,245</h3>
+          <p>Total Users</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon">🍽️</div>
+          <h3>86</h3>
+          <p>Restaurants</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="icon">📦</div>
+          <h3>3,420</h3>
+          <p>Total Orders</p>
+        </div>
+
+
+        <div class="stat-card">
+          <div class="icon">💰</div>
+          <h3>Rs. 8.5M</h3>
+          <p>Total Revenue</p>
+        </div>
+      </div>
+      <section class="chart-panel">
+  <h2>Monthly Orders Overview</h2>
+  <div class="chart-box">
+    <canvas id="ordersChart"></canvas>
+  </div>
+</section>
+
+      <div class="content-grid">
+
+        <section class="panel">
+          <h2>Pending Restaurant Approvals</h2>
+
+          <div class="request-card">
+            <div>
+              <h3>Spice Palace</h3>
+              <p><b>Owner:</b> Ahmed Khan</p>
+              <p><b>Category:</b> Pakistani Food</p>
+              <p><b>Location:</b> Gulberg, Lahore</p>
+
+              <div class="request-actions">
+                <button class="approve-btn">Approve</button>
+                <button class="reject-btn">Reject</button>
+                <button class="view-btn">View Details</button>
+              </div>
+            </div>
+
+            <span class="status pending">Pending</span>
+          </div>
+
+          <div class="request-card">
+            <div>
+              <h3>Pizza Mania</h3>
+              <p><b>Owner:</b> Sara Ali</p>
+              <p><b>Category:</b> Pizza & Fast Food</p>
+              <p><b>Location:</b> Johar Town, Lahore</p>
+
+              <div class="request-actions">
+                <button class="approve-btn">Approve</button>
+                <button class="reject-btn">Reject</button>
+                <button class="view-btn">View Details</button>
+              </div>
+            </div>
+
+            <span class="status pending">Pending</span>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>System Overview</h2>
+
+          <ul class="quick-list">
+            <li><strong>Active Orders</strong> <span>42</span></li>
+            <li><strong>Pending Payments</strong> <span>18</span></li>
+            <li><strong>Available Riders</strong> <span>29</span></li>
+            <li><strong>Open Complaints</strong> <span>7</span></li>
+            <li><strong>Top Restaurant</strong> <span>Spice Hub</span></li>
+            <li><strong>Most Ordered Item</strong> <span>Biryani</span></li>
+          </ul>
+        </section>
+
+      </div>
+
+      <h2 class="section-title">Recent Orders</h2>
+
+      <div class="table-box">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Restaurant</th>
+              <th>Amount</th>
+              <th>Payment</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>#LB1001</td>
+              <td>Mishal</td>
+              <td>Spice Hub</td>
+              <td>Rs. 1,200</td>
+              <td>Cash on Delivery</td>
+              <td><span class="status approved">Delivered</span></td>
+            </tr>
+
+            <tr>
+              <td>#LB1002</td>
+              <td>Ali</td>
+              <td>Burger House</td>
+              <td>Rs. 650</td>
+              <td>Online Payment</td>
+              <td><span class="status pending">Preparing</span></td>
+            </tr>
+
+            <tr>
+              <td>#LB1003</td>
+              <td>Sara</td>
+              <td>Pizza Corner</td>
+              <td>Rs. 1,799</td>
+              <td>Cash on Delivery</td>
+              <td><span class="status pending">On the Way</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="two-panels">
+
+        <section>
+          <h2 class="section-title">Registered Users</h2>
+
+          <div class="table-box">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Role</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Mishal</td>
+                  <td>Customer</td>
+                  <td>mishal@gmail.com</td>
+                  <td>
+                    <button class="action-small edit">Edit</button>
+                    <button class="action-small delete">Block</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Ahmed Khan</td>
+                  <td>Restaurant Owner</td>
+                  <td>ahmed@gmail.com</td>
+                  <td>
+                    <button class="action-small edit">Edit</button>
+                    <button class="action-small delete">Block</button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>Usman</td>
+                  <td>Rider</td>
+                  <td>usman@gmail.com</td>
+                  <td>
+                    <button class="action-small edit">Edit</button>
+                    <button class="action-small delete">Block</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="section-title">Complaints</h2>
+
+          <div class="table-box">
+            <table>
+              <thead>
+                <tr>
+                  <th>Complaint</th>
+                  <th>User</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Late delivery</td>
+                  <td>Mishal</td>
+                  <td><span class="status pending">Open</span></td>
+                  <td><button class="action-small edit">Resolve</button></td>
+                </tr>
+
+                <tr>
+                  <td>Wrong item received</td>
+                  <td>Ali</td>
+                  <td><span class="status approved">Resolved</span></td>
+                  <td><button class="action-small edit">View</button></td>
+                </tr>
+
+                <tr>
+                  <td>Payment issue</td>
+                  <td>Sara</td>
+                  <td><span class="status pending">Open</span></td>
+                  <td><button class="action-small edit">Resolve</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+<script>
+  const ctx = document.getElementById("ordersChart");
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      datasets: [{
+        label: "Orders",
+        data: [420, 520, 610, 750, 840, 960],
+        backgroundColor: "#ef4f5f",
+        borderRadius: 12
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lahore Bites</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #fff;
+      color: #111827;
+      overflow-x: hidden;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .hero {
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    .hero video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.58);
+      z-index: -2;
+    }
+
+    .navbar {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding: 28px 8%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 38px;
+      font-weight: 900;
+      font-style: italic;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .hero-content h1 {
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 22px;
+    }
+
+    .hero-content h1 span {
+      display: block;
+      font-size: 52px;
+    }
+
+    .hero-content p {
+      font-size: 24px;
+      margin-bottom: 38px;
+      font-weight: 500;
+    }
+
+    .app-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .store-btn {
+      background: #000;
+      border: 1px solid #fff;
+      color: white;
+      padding: 13px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .scroll-down {
+      position: absolute;
+      bottom: 22px;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+    }
+
+ .intro {
+  min-height: 100vh;
+  position: relative;
+  background: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 8%;
+}
+
+.intro-content {
+  position: relative;
+  z-index: 5;
+  margin-top: 70px;
+}
+
+.intro h2 {
+  font-size: 58px;
+  line-height: 1.25;
+  color: #ef4f5f;
+  margin-bottom: 28px;
+  font-weight: 800;
+}
+
+.intro p {
+  font-size: 23px;
+  color: #667085;
+  line-height: 1.55;
+}
+
+.food-img {
+  position: absolute;
+  object-fit: contain;
+  z-index: 3;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.12));
+}
+
+.burger {
+  width: 270px;
+  left: 16%;
+  top: 51%;
+}
+
+.momos {
+  width: 250px;
+  right: 17%;
+  top: 11%;
+}
+
+.pizza {
+  width: 300px;
+  right: 9%;
+  bottom: 1%;
+}
+
+.tomato {
+  width: 72px;
+  right: 10%;
+  top: 43%;
+}
+
+.leaf {
+  width: 72px;
+  left: 32%;
+  top: 12%;
+}
+
+.pink-line {
+  position: absolute;
+  z-index: 1;
+  border: 2px solid #ffb8c8;
+  border-color: #ffb8c8 transparent transparent transparent;
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.line-left {
+  width: 620px;
+  height: 720px;
+  left: -170px;
+  top: 30px;
+  border-radius: 50%;
+  transform: rotate(38deg);
+}
+
+.line-right {
+  width: 720px;
+  height: 850px;
+  right: -230px;
+  top: -35px;
+  border-radius: 50%;
+  transform: rotate(35deg);
+}
+    .stats-section {
+      padding: 70px 8% 130px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+    }
+
+    .stats-box {
+      width: 75%;
+      background: #fff;
+      border-radius: 35px;
+      padding: 35px 45px;
+      box-shadow: 0 12px 40px rgba(239, 79, 95, 0.13);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      border: 1px solid #ffe1e5;
+    }
+
+    .stat {
+      text-align: center;
+      border-right: 1px solid #e5e7eb;
+    }
+
+    .stat:last-child {
+      border-right: none;
+    }
+
+    .stat h3 {
+      font-size: 42px;
+      color: #48546b;
+      font-weight: 800;
+    }
+
+    .stat p {
+      font-size: 22px;
+      color: #667085;
+    }
+
+    .features {
+      background: #fff1f3;
+      text-align: center;
+      padding: 30px 8% 0;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .features h2 {
+      font-size: 58px;
+      color: #ef4f5f;
+      line-height: 1.15;
+      margin-bottom: 30px;
+      font-weight: 800;
+    }
+
+    .features > p {
+      font-size: 23px;
+      color: #566176;
+      line-height: 1.55;
+      margin-bottom: 35px;
+    }
+
+    .feature-layout {
+      max-width: 1450px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.95fr 1.1fr;
+      align-items: end;
+      gap: 35px;
+    }
+
+    .feature-side {
+      display: grid;
+      grid-template-columns: repeat(2, 170px);
+      gap: 22px 35px;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 35px;
+    }
+
+    .feature-card {
+      width: 170px;
+      height: 155px;
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .feature-card.upper {
+      transform: translateY(-36px);
+    }
+
+    .feature-card.lower {
+      transform: translateY(24px);
+    }
+
+    .feature-card img {
+      width: 88px;
+      height: 78px;
+      object-fit: contain;
+      margin-bottom: 12px;
+    }
+
+    .feature-card h4 {
+      font-size: 20px;
+      color: #0f172a;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .phone {
+      width: 360px;
+      height: 590px;
+      margin: 0 auto;
+      border: 13px solid #111;
+      border-bottom: none;
+      border-radius: 52px 52px 0 0;
+      background: white;
+      box-shadow: 0 20px 42px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 140px;
+      height: 32px;
+      background: #111;
+      border-radius: 0 0 18px 18px;
+    }
+
+    .phone-card {
+      width: 185px;
+      height: 190px;
+      background: white;
+      border-radius: 30px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .phone-card img {
+      width: 95px;
+      height: 90px;
+      object-fit: contain;
+      margin-bottom: 12px;
+    }
+
+    .phone-card h3 {
+      font-size: 24px;
+      line-height: 1.2;
+      color: #1f2937;
+      font-weight: 700;
+    }
+
+    .gold {
+      background: #000;
+      color: white;
+      text-align: center;
+      padding: 100px 8%;
+    }
+
+    .gold .brand {
+      font-size: 42px;
+      font-weight: 900;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    .gold h2 {
+      font-size: 86px;
+      background: linear-gradient(90deg, #b27b22, #fff0b8, #b27b22);
+    
+      color: transparent;
+      font-weight: 900;
+      margin-bottom: 25px;
+    }
+
+    .gold p {
+      font-size: 28px;
+      color: #c9a24f;
+      margin-bottom: 60px;
+    }
+
+    .gold-benefits {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .benefit {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      text-align: left;
+    }
+
+    .benefit-icon {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #111;
+      border: 1px solid #8a6822;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+    }
+
+    .benefit h3 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .benefit p {
+      font-size: 21px;
+      margin: 0;
+      color: #c9a24f;
+    }
+
+    .brands {
+      padding: 90px 8%;
+      text-align: center;
+      background: white;
+    }
+
+    .brands h2 {
+      font-size: 38px;
+      color: #7a8499;
+      letter-spacing: 8px;
+      margin-bottom: 70px;
+    }
+
+    .brand-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+
+    .brand-card {
+      min-height: 480px;
+      border-radius: 32px;
+      padding: 45px 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      border: 4px solid #ffdbe0;
+      background: linear-gradient(180deg, #ffd4da, #fff5f6);
+    }
+
+    .brand-card.yellow {
+      border-color: #ffeab0;
+      background: linear-gradient(180deg, #fff0ba, #fffaf0);
+    }
+
+    .brand-card.purple {
+      border-color: #d8c5ff;
+      background: linear-gradient(180deg, #e4d7ff, #f8f5ff);
+    }
+
+    .brand-logo {
+      width: 180px;
+      height: 180px;
+      border-radius: 40px;
+      background: #ef334b;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 55px;
+      font-weight: 900;
+      font-style: italic;
+    }
+
+    .brand-card h3 {
+      font-size: 30px;
+    }
+
+    .brand-card p {
+      font-size: 20px;
+      color: #526079;
+      line-height: 1.5;
+    }
+
+    .brand-card a {
+      text-decoration: none;
+      color: #111827;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    footer {
+      background: #000;
+      color: white;
+      padding: 90px 8% 35px;
+    }
+
+    .footer-logo {
+      font-size: 46px;
+      font-weight: 900;
+      font-style: italic;
+      margin-bottom: 50px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 40px;
+      margin-bottom: 70px;
+    }
+
+    .footer-col h3 {
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+
+    .footer-col a {
+      display: block;
+      color: #7d8597;
+      text-decoration: none;
+      margin-bottom: 17px;
+      font-size: 18px;
+    }
+
+    .socials {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .socials span {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: white;
+      color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 800;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #333;
+      padding-top: 28px;
+      color: #7d8597;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 992px) {
+      .hero-content h1 {
+        font-size: 46px;
+      }
+
+      .hero-content h1 span {
+        font-size: 34px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .intro h2,
+      .features h2 {
+        font-size: 40px;
+      }
+
+      .food-img {
+        opacity: 0.35;
+      }
+
+      .stats-box,
+      .feature-layout,
+      .gold-benefits,
+      .brand-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+.hero-stats{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    flex-wrap:wrap;
+}
+
+.stat-box{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.18);
+    padding:18px 28px;
+    border-radius:18px;
+    min-width:160px;
+}
+
+.stat-box h3{
+    color:#ffffff;
+    font-size:34px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.stat-box span{
+    color:#f1f1f1;
+    font-size:16px;
+}
+      .stats-box {
+        width: 100%;
+      }
+
+      .stat {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 25px;
+      }
+
+      .stat:last-child {
+        border-bottom: none;
+      }
+
+      .feature-side {
+        grid-template-columns: repeat(2, 160px);
+      }
+
+      .phone {
+        width: 300px;
+        height: 500px;
+      }
+
+      .gold h2 {
+        font-size: 58px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero" id="home">
+    <video autoplay muted loop playsinline>
+      
+  <source src="assets/videos/hero.mp4" type="video/mp4">
+</video>
+    </video>
+
+    <nav class="navbar">
+      <div class="logo">Lahore Bites</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="#footer">Contact</a></li>
+      </ul>
+    </nav>
+
+  <div class="hero-content">
+    
+    <h1>Lahore Bites</h1>
+
+    <h2>Lahore’s #1 Food Ordering Platform</h2>
+
+    <p>
+        Discover top restaurants, order delicious meals, 
+        
+    </p>
+
+
+
+</div>
+
+<div class="scroll-down">
+    Scroll down ↓
+</div>
+  </section>
+
+  <section class="intro" id="about">
+  <div class="pink-line line-left"></div>
+  <div class="pink-line line-right"></div>
+
+  <img class="food-img burger" src="assets/images/burger.png" alt="Burger">
+  <img class="food-img momos" src="assets/images/momos.png" alt="Momos">
+  <img class="food-img pizza" src="assets/images/pizza.png" alt="Pizza">
+  <img class="food-img tomato" src="assets/images/tomato.png" alt="Tomato">
+  <img class="food-img leaf" src="assets/images/leaf.png" alt="Leaf">
+
+  <div class="intro-content">
+    <h2>Better food for<br>more people</h2>
+    <p>
+      For over a decade, we’ve enabled our<br>
+      customers to discover new tastes,<br>
+      delivered right to their doorstep
+    </p>
+  </div>
+</section>
+  
+
+  <section class="stats-section">
+    <div class="stats-box">
+      <div class="stat">
+        <h3>5,000+</h3>
+        <p>restaurants</p>
+      </div>
+
+      <div class="stat">
+        <h3>100+</h3>
+        <p>areas covered</p>
+      </div>
+
+      <div class="stat">
+        <h3>1M+</h3>
+        <p>orders delivered</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <h2>What’s included in<br>Lahore Bites?</h2>
+
+    <p>
+      Lahore Bites provides complete food delivery,<br>
+      restaurant management, payment handling,<br>
+      order tracking and rider management features.
+    </p>
+
+    <div class="feature-layout">
+
+      <div class="feature-side left-side">
+        <div class="feature-card">
+          <img src="assets/images/user.png" alt="Users">
+          <h4>Users</h4>
+        </div>
+
+        <div class="feature-card upper">
+          <img src="assets/images/address.png" alt="Addresses">
+          <h4>Addresses</h4>
+        </div>
+
+        <div class="feature-card lower">
+          <img src="assets/images/cart.png" alt="Cart">
+          <h4>Shopping Cart</h4>
+        </div>
+
+        <div class="feature-card">
+          <img src="assets/images/favorite.png" alt="Favorites">
+          <h4>Favorites</h4>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="phone-card">
+          <img src="assets/images/order.png" alt="Orders">
+          <h3>Track<br>your orders</h3>
+        </div>
+      </div>
+
+      <div class="feature-side right-side">
+        <div class="feature-card">
+          <img src="assets/images/payment.png" alt="Payments">
+          <h4>Payments</h4>
+        </div>
+
+        <div class="feature-card upper">
+          <img src="assets/images/restaurant.png" alt="Restaurants">
+          <h4>Restaurants</h4>
+        </div>
+
+        <div class="feature-card lower">
+          <img src="assets/images/delivery.png" alt="Delivery">
+          <h4>Deliveries</h4>
+        </div>
+
+        <div class="feature-card">
+          <img src="assets/images/review.png" alt="Reviews">
+          <h4>Reviews</h4>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="gold" id="gold">
+    <div class="brand">Lahore Bites</div>
+    <h2>GOLD</h2>
+    <p>Lahore’s Top Savings Program for Food Lovers</p>
+
+    <div class="gold-benefits">
+      <div class="benefit">
+        <div class="benefit-icon">🎟️</div>
+        <div>
+          <h3>Free Delivery</h3>
+          <p>At selected restaurants within 7 km</p>
+        </div>
+      </div>
+
+      <div class="benefit">
+        <div class="benefit-icon">🛵</div>
+        <div>
+          <h3>Up to 30% extra off</h3>
+          <p>At 1,000+ partner restaurants</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="brands">
+    <h2>POWERING LAHORE’S FOOD DELIVERY SYSTEM</h2>
+
+    <div class="brand-grid">
+      <div class="brand-card">
+        <div class="brand-logo">👤</div>
+        <h3>Users</h3>
+        <p>Register, login, manage profile, phone, email, password and role.</p>
+        <a href="#">Check it out ❯</a>
+      </div>
+
+      <div class="brand-card yellow">
+        <div class="brand-logo" style="background:#facc15;color:#111;font-style:normal;">🍽️</div>
+        <h3>Restaurants</h3>
+        <p>Manage restaurant details, timing, location, delivery fee and rating.</p>
+        <a href="#">Check it out ❯</a>
+      </div>
+
+      <div class="brand-card purple">
+        <div class="brand-logo" style="background:#6d28d9;">📦</div>
+        <h3>Orders</h3>
+        <p>Place orders with address, amount, payment method and delivery status.</p>
+        <a href="#">Check it out ❯</a>
+      </div>
+
+      <div class="brand-card">
+        <div class="brand-logo">🚴</div>
+        <h3>Riders</h3>
+        <p>Assign riders, track delivery status, pickup time and delivered time.</p>
+        <a href="#">Check it out ❯</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div class="footer-logo">Lahore Bites</div>
+
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h3>User Features</h3>
+        <a href="register.html">User Registration</a>
+        <a href="login.html">Login System</a>
+        <a href="#">User Profiles</a>
+        <a href="#">Saved Addresses</a>
+      </div>
+
+      <div class="footer-col">
+        <h3>Restaurant Features</h3>
+        <a href="#">Restaurant Management</a>
+        <a href="#">Menu Items</a>
+        <a href="#">Food Categories</a>
+        <a href="#">Restaurant Reviews</a>
+      </div>
+
+      <div class="footer-col">
+        <h3>Order Features</h3>
+        <a href="#">Shopping Cart</a>
+        <a href="#">Order Tracking</a>
+        <a href="#">Payments</a>
+        <a href="#">Favorites</a>
+      </div>
+
+      <div class="footer-col">
+        <h3>Delivery Features</h3>
+        <a href="#">Rider Management</a>
+        <a href="#">Delivery Tracking</a>
+        <a href="#">Order Status</a>
+        <a href="#">Complaints System</a>
+      </div>
+
+      <div class="footer-col">
+        <h3>System Modules</h3>
+
+        <div class="socials">
+          <span>👤</span>
+          <span>🍔</span>
+          <span>🛒</span>
+          <span>🚚</span>
+        </div>
+
+        <a href="#" class="store-btn">📦 Order Management</a>
+        <br>
+        <a href="#" class="store-btn">💳 Payment System</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      Lahore Bites is a complete food delivery management system
+     
+      <br><br>
+      2026 © Lahore Bites. All rights reserved.
+    </div>
+  </footer>
+
+</body>
+</html>
